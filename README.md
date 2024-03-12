@@ -1,7 +1,7 @@
 # AdamHook
 
 ## Version Compatible
-Currently 1.13.6
+Currently 1.13.7
 
 ## Info
 HOI4 Cheat Menu
@@ -19,7 +19,7 @@ Video for it: https://youtu.be/F2zQM159EzQ
 ##### Debug - Enables Debug
 ##### Tdebug - Enables Debug Tab
 
-### SP CHEATS
+### SP CHEATS (DOESNT WORK)
 ##### Research instantly on click
 ##### Focus instant complete
 ##### Focus no checks (you can do focuses without having the requirements)
