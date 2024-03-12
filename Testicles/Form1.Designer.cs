@@ -89,6 +89,11 @@
             this.button23 = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.button24 = new System.Windows.Forms.Button();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.button25 = new System.Windows.Forms.Button();
+            this.label33 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -392,9 +397,9 @@
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label16.Location = new System.Drawing.Point(588, 45);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(107, 25);
+            this.label16.Size = new System.Drawing.Size(278, 25);
             this.label16.TabIndex = 33;
-            this.label16.Text = "SP Cheats";
+            this.label16.Text = "SP Cheats (DOESNT WORK)";
             // 
             // label17
             // 
@@ -718,12 +723,71 @@
             this.button24.UseVisualStyleBackColor = false;
             this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
+            // checkBox12
+            // 
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox12.Location = new System.Drawing.Point(938, 85);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(130, 24);
+            this.checkBox12.TabIndex = 63;
+            this.checkBox12.Text = "DebugOutput";
+            this.checkBox12.UseVisualStyleBackColor = true;
+            this.checkBox12.CheckedChanged += new System.EventHandler(this.checkBox12_CheckedChanged);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(976, 45);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(70, 25);
+            this.label31.TabIndex = 64;
+            this.label31.Text = "Debug";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label32.Location = new System.Drawing.Point(933, 169);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(175, 25);
+            this.label32.TabIndex = 65;
+            this.label32.Text = "Debug Test Button";
+            // 
+            // button25
+            // 
+            this.button25.BackColor = System.Drawing.Color.DimGray;
+            this.button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button25.Location = new System.Drawing.Point(968, 217);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(100, 42);
+            this.button25.TabIndex = 66;
+            this.button25.Text = "Test";
+            this.button25.UseVisualStyleBackColor = false;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(935, 124);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(156, 32);
+            this.label33.TabIndex = 67;
+            this.label33.Text = "breaks if you enable then\r\ndisable\r\n";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(862, 726);
+            this.ClientSize = new System.Drawing.Size(1214, 726);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.button25);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.checkBox12);
             this.Controls.Add(this.button24);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.button22);
@@ -852,6 +916,11 @@
         private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.CheckBox checkBox12;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.Label label33;
     }
 }
 

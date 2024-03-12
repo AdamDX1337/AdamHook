@@ -36,13 +36,14 @@ namespace Testicles
         }
 
         //mp addresses
-        ulong baseAddrFOW, baseAddrDBG, baseAddrAT, targetAddrTS, targetAddrTD;
+        ulong baseAddrFOW, baseAddrDBG, baseAddrAT, targetAddrTS, targetAddrTD, targetAddrTS2;
         ulong StartGame;
 
         //sp addresses
         ulong baseAddrROC, baseAddrIC, baseAddrNOCB, baseAddrIW, baseAddrIT, baseAddrFA, baseAddrFNC;
         int i = 0;
         bool music = true;
+        bool console = false;
         MemoryHelper64 helper;
         
 
@@ -61,77 +62,82 @@ namespace Testicles
 
 
 
-
+            
             Process p = Process.GetProcessesByName("hoi4").FirstOrDefault();
+
             if (p == null)
             {
                 label14.Text = "Hoi4 Not Connected: Restart";
                 //Console.WriteLine("[AdamHook DEBUG] CANNOT CONNECT TO HOI4. RESTART PROGRAM");
                 LoadEmbeddedAudio("heaven.wav");
-                return;
 
             }
-            label14.Text = "Hoi4 Connected";
-            LoadEmbeddedAudio("purgatory.wav");
-            Console.WriteLine("[AdamHook DEBUG] HOI4 CONNECTED.");
-            Console.WriteLine("[AdamHook DEBUG] Updated for version 1.13.4");
-            helper = new MemoryHelper64(p);
-
-            
-
-            // works in MP
-
-            //Tag Switch
-            ulong baseAddrTS = helper.GetBaseAddress(0x2C87850); 
-            int[] offsetTS = { 0x4A0 };
-            targetAddrTS = MemoryUtils.OffsetCalculator(helper, baseAddrTS, offsetTS);
-
-            //Tdebug
-            ulong baseAddrTD = helper.GetBaseAddress(0x2C87860);
-            int[] offsetTD = { 0x78 };
-            targetAddrTD = MemoryUtils.OffsetCalculator(helper, baseAddrTD, offsetTD);
-
-
-            //FOW
-            baseAddrFOW = helper.GetBaseAddress(0x2AABDDA);
-
-            //AllowTraits
-            baseAddrAT = helper.GetBaseAddress(0x2AABDB8);
-
-            //Debug
-            baseAddrDBG = helper.GetBaseAddress(0x2C8732C);
+            else
+            {
+                label14.Text = "Hoi4 Connected";
+                LoadEmbeddedAudio("purgatory.wav");
+                Console.WriteLine("[AdamHook DEBUG] HOI4 CONNECTED.");
+                Console.WriteLine("[AdamHook DEBUG] Updated for version 1.13.4");
+                helper = new MemoryHelper64(p);
 
 
 
+                // works in MP
 
-            //StartGame = helper.GetBaseAddress(0xEBD230);
+                //Tag Switch
+                ulong baseAddrTS = helper.GetBaseAddress(0x2C8E0F0);
+                int[] offsetTS = { 0x4B0 };
+                targetAddrTS = MemoryUtils.OffsetCalculator(helper, baseAddrTS, offsetTS);
+                //ulong baseAddrTS2 = helper.GetBaseAddress(0x2C98198);
+
+
+                //Tdebug
+                ulong baseAddrTD = helper.GetBaseAddress(0x2C87860);
+                int[] offsetTD = { 0x78 };
+                targetAddrTD = MemoryUtils.OffsetCalculator(helper, baseAddrTD, offsetTD);
+
+
+                //FOW
+                baseAddrFOW = helper.GetBaseAddress(0x2AB1DDA);
+
+                //AllowTraits
+                baseAddrAT = helper.GetBaseAddress(0x2AB1DB8);
+
+                //Debug
+                baseAddrDBG = helper.GetBaseAddress(0x2C8DBD4);
 
 
 
-            // works in sp
-            
-            //research on click
-            baseAddrROC = helper.GetBaseAddress(0x2AABDB6);
 
-            //instant construction
-            baseAddrIC = helper.GetBaseAddress(0x2AABDC9);
+                //StartGame = helper.GetBaseAddress(0xEBD230);
 
-            //no diplo
-            baseAddrNOCB = helper.GetBaseAddress(0x2AABDB7);
 
-            //instant wargoal
-            baseAddrIW = helper.GetBaseAddress(0x2AABDE4);
 
-            //instant training
-            baseAddrIT = helper.GetBaseAddress(0x2AABDCC);
+                // works in sp (TOO LAZY TO UPDATE!)
 
-            //focus autocomplete
-            baseAddrFA = helper.GetBaseAddress(0x2AABDCD);
+                //research on click
+                baseAddrROC = 0; //helper.GetBaseAddress(0x2AABDB6);
 
-            //focus nochecks
-            baseAddrFNC = helper.GetBaseAddress(0x2AABDD2);
+                //instant construction
+                baseAddrIC = 0; //helper.GetBaseAddress(0x2AABDC9);
 
-            timer1.Start();
+                //no diplo
+                baseAddrNOCB = 0; //helper.GetBaseAddress(0x2AABDB7);
+
+                //instant wargoal
+                baseAddrIW = 0; //helper.GetBaseAddress(0x2AABDE4);
+
+                //instant training
+                baseAddrIT = 0; //helper.GetBaseAddress(0x2AABDCC);
+
+                //focus autocomplete
+                baseAddrFA = 0; //helper.GetBaseAddress(0x2AABDCD);
+
+                //focus nochecks
+                baseAddrFNC = 0; //helper.GetBaseAddress(0x2AABDD2);
+
+                timer1.Start();
+            }
         }
 
       
@@ -140,9 +146,6 @@ namespace Testicles
         //Refresh to see new memory value
         private void timer1_Tick_1(object sender, EventArgs e)
         {
-            i++;
-            if(i == 100)
-            { Console.WriteLine("[AdamHook DEBUG] LOOP x100"); i = 0; }
             
             // FOW
             if (helper.ReadMemory<Byte>(baseAddrFOW).ToString() == "0")
@@ -264,19 +267,23 @@ namespace Testicles
         private void button1_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Int32>(targetAddrTS, Int32.Parse(textBox1.Text));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2C71168 4Byte (INT32) + Offset 0x4A0 | 4Byte Value set to " + textBox1.Text);
-        }  
+            Console.WriteLine("[AdamHook DEBUG] TAGSWITCHED TO: " + textBox1.Text);
+
+
+        }
         private void button7_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrDBG, Byte.Parse("1"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2C70C4C | Byte Value set to 1 ");
+            Console.WriteLine("[AdamHook DEBUG] DBG ON");
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFOW, Byte.Parse("0"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2A95DCA | Byte Value set to 0 ");
-            
+            Console.WriteLine("[AdamHook DEBUG] FOW OFF");
+
+
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -332,21 +339,26 @@ namespace Testicles
         private void button19_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFA, Byte.Parse("1"));
+ 
+
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFA, Byte.Parse("0"));
+
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFNC, Byte.Parse("1"));
+
         }
 
         private void button20_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFNC, Byte.Parse("0"));
+
         }
 
         private void label23_Click(object sender, EventArgs e)
@@ -370,16 +382,44 @@ namespace Testicles
             
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox12_CheckedChanged(object sender, EventArgs e)
+        {
+
+            console = !console;
+
+            if (console == true)
+            {
+                ConsoleHelper.AllocConsole();
+                Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+                Console.WriteLine("[AdamHook DEBUG] Loaded");
+            }
+            if (console == false)
+            {
+                ConsoleHelper.FreeConsole();
+            }
+            
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("[AdamHook DEBUG] DEBUG TEST");
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrAT, Byte.Parse("0"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2A95DA8 | Byte Value set to 0 ");
+            Console.WriteLine("[AdamHook DEBUG] AT OFF");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrDBG, Byte.Parse("0"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2C70C4C | Byte Value set to 0 ");
+            Console.WriteLine("[AdamHook DEBUG] DBG OFF");
         }
 
        
@@ -387,7 +427,7 @@ namespace Testicles
         private void button5_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrAT, Byte.Parse("1"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2A95DA8 | Byte Value set to 1 ");
+            Console.WriteLine("[AdamHook DEBUG] AT ON");
         }
 
         private void label12_Click(object sender, EventArgs e)
@@ -398,13 +438,13 @@ namespace Testicles
         private void button8_Click_1(object sender, EventArgs e)
         {
             helper.WriteMemory<Int32>(targetAddrTD, Int32.Parse("1"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2C70C4C | Byte Value set to 1 ");
+            Console.WriteLine("[AdamHook DEBUG] TDBG ON");
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Int32>(targetAddrTD, Int32.Parse("0"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2C70C4C | Byte Value set to 1 ");
+            Console.WriteLine("[AdamHook DEBUG] TDBG OFF");
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -421,13 +461,14 @@ namespace Testicles
         private void button3_Click(object sender, EventArgs e)
         {
             helper.WriteMemory<Byte>(baseAddrFOW, Byte.Parse("1"));
-            //Console.WriteLine("[AdamHook DEBUG] 0x2A95DCA | Byte Value set to 1 ");
+            Console.WriteLine("[AdamHook DEBUG] FOW ON");
+
         } 
 
         //Youtube Link
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://www.youtube.com/@AdamDX1337");
+            Process.Start("https://www.youtube.com/channel/UCusIfQZ-BsQK0ktgV9bOAJw");
         }
     }
 }
