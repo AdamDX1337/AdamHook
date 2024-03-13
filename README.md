@@ -1,7 +1,8 @@
 # AdamHook
 
 ## Version Compatible
-Currently 1.13.7
+Currently 1.14.?
+SP CHEATS DONT WORK
 
 ## Info
 HOI4 Cheat Menu
